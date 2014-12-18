@@ -1,0 +1,11 @@
+org\apache\cassandra\cql\TestClass.class
+org\apache\cassandra\cql\jdbc\DataSourceTest.class
+org\apache\cassandra\cql\jdbc\CollectionsTest.class
+org\apache\cassandra\cql\jdbc\MetadataResultSetsTest.class
+org\apache\cassandra\cql\jdbc\HandleObjectsUnitTest.class
+org\apache\cassandra\cql\jdbc\UtilsUnitTest.class
+org\apache\cassandra\cql\ConnectionTest.class
+org\apache\cassandra\cql\jdbc\JdbcRegressionTest.class
+org\apache\cassandra\cql\ConnectionDetails.class
+org\apache\cassandra\cql\jdbc\PooledTest.class
+org\apache\cassandra\cql\jdbc\SpashScreenTest.class
