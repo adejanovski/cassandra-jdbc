@@ -66,6 +66,7 @@ class Utils
     public static final String KEY_CONSISTENCY = "consistency";
     public static final String KEY_PRIMARY_DC = "primarydc";
     public static final String KEY_BACKUP_DC = "backupdc";
+    public static final String KEY_FORCE_CQL2_METHODS = "enforcecql2methods";
     public static final String KEY_CONNECTION_RETRIES = "retries";
     
     public static final String TAG_DESCRIPTION = "description";
@@ -224,6 +225,10 @@ class Utils
                 if (params.containsKey(KEY_BACKUP_DC) )
                 {
                     props.setProperty(TAG_BACKUP_DC,params.get(KEY_BACKUP_DC));
+                }
+                if (params.containsKey(KEY_FORCE_CQL2_METHODS) )
+                {
+                    props.setProperty(KEY_FORCE_CQL2_METHODS,params.getOrDefault(KEY_FORCE_CQL2_METHODS, "false"));
                 }
                 if (params.containsKey(KEY_CONNECTION_RETRIES) )
                 {

@@ -97,6 +97,7 @@ class CassandraConnection extends AbstractConnection implements Connection
     protected TreeSet<String> hostListPrimary;
     protected TreeSet<String> hostListBackup;
     int majorCqlVersion;
+    boolean enforceCql2Methods;
     ColumnDecoder decoder;
 
     private TSocket socket;
@@ -131,6 +132,7 @@ class CassandraConnection extends AbstractConnection implements Connection
             String primaryDc = props.getProperty(TAG_PRIMARY_DC,"");
             String backupDc = props.getProperty(TAG_BACKUP_DC,"");
             connectionProps.setProperty(TAG_ACTIVE_CQL_VERSION, version);
+            enforceCql2Methods = Boolean.parseBoolean(props.getProperty(KEY_FORCE_CQL2_METHODS, "false"));
             majorCqlVersion = getMajor(version);
             defaultConsistencyLevel = ConsistencyLevel.valueOf(props.getProperty(TAG_CONSISTENCY_LEVEL,ConsistencyLevel.ONE.name()));
             boolean connected=false;            
@@ -539,7 +541,7 @@ class CassandraConnection extends AbstractConnection implements Connection
 
         try
         {
-            if (majorCqlVersion==3) return client.execute_cql3_query(Utils.compressQuery(queryStr, compression), compression, consistencyLevel);
+            if (majorCqlVersion==3 && !enforceCql2Methods) return client.execute_cql3_query(Utils.compressQuery(queryStr, compression), compression, consistencyLevel);
             else                    return client.execute_cql_query(Utils.compressQuery(queryStr, compression), compression);
         }
         catch (TException error)
@@ -573,7 +575,7 @@ class CassandraConnection extends AbstractConnection implements Connection
     {
         try
         {
-            if (majorCqlVersion==3) return client.execute_prepared_cql3_query(itemId, values, consistencyLevel);
+            if (majorCqlVersion==3 && !enforceCql2Methods) return client.execute_prepared_cql3_query(itemId, values, consistencyLevel);
             else                    return client.execute_prepared_cql_query(itemId, values);
         }
         catch (TException error)
@@ -588,7 +590,7 @@ class CassandraConnection extends AbstractConnection implements Connection
     {
         try
         {
-            if (majorCqlVersion==3) return client.prepare_cql3_query(Utils.compressQuery(queryStr, compression), compression);
+            if (majorCqlVersion==3 && !enforceCql2Methods) return client.prepare_cql3_query(Utils.compressQuery(queryStr, compression), compression);
             else                    return client.prepare_cql_query(Utils.compressQuery(queryStr, compression), compression);
         }
         catch (TException error)
